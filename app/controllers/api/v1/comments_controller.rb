@@ -4,9 +4,9 @@ class Api::V1::CommentsController < ApplicationController
     def create
         @comment = Comment.create(comment_params)
         if @comment.valid? 
-            render json: @comment.to_json( :include => {
+            render json: { comment: @comment.to_json( :include => {
                 :user => { :only => [:id, :first_name, :last_name, :avatar] }
-            })
+            })}
         else
             render json: { error: 'failed to create comment' }, status: :not_acceptable
         end
@@ -14,7 +14,7 @@ class Api::V1::CommentsController < ApplicationController
 
 
     def destroy
-        comment = Comment.find_by(params[:id])
+        comment = Comment.find_by(id: params[:id])
         if comment.user_id === current_user.id
         comment.destroy
         else

@@ -3,7 +3,11 @@ class Api::V1::PostsController < ApplicationController
 
     def index
         @posts = Post.all
-        render json: @posts.to_json( include: [:comments, :commenting_users, :likes, :liking_users] )
+        render json: @posts.to_json( :include => {
+            :user => { :only => [:id, :first_name, :last_name, :avatar] },
+            :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
+            :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }
+        } )
     end
 
     def create
