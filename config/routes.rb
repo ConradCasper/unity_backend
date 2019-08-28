@@ -4,9 +4,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :follows, only: [:create, :destroy]
       resources :likes, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
-      resources :users, only: [:create]
+      resources :users, only: [:create, :update, :destroy]
       resources :posts, only: [:create, :edit, :update, :destroy, :index]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'

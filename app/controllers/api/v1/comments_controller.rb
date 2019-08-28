@@ -14,7 +14,7 @@ class Api::V1::CommentsController < ApplicationController
 
 
     def destroy
-        comment = Comment.find_by(params[:id])
+        comment = Comment.find_by(id: params[:id])
         if comment.user_id === current_user.id
         comment.destroy
         else
