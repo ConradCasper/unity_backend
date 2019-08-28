@@ -4,9 +4,9 @@ class Api::V1::CommentsController < ApplicationController
     def create
         @comment = Comment.create(comment_params)
         if @comment.valid? 
-            render json: @comment.to_json( :include => {
+            render json: { comment: @comment.to_json( :include => {
                 :user => { :only => [:id, :first_name, :last_name, :avatar] }
-            })
+            })}
         else
             render json: { error: 'failed to create comment' }, status: :not_acceptable
         end
