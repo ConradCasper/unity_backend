@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :comments, only: [:create, :destroy]
       resources :users, only: [:create]
       resources :posts, only: [:create, :edit, :update, :destroy, :index]
       post '/login', to: 'auth#create'
