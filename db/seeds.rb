@@ -46,16 +46,25 @@ User.create(
         bio: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
         interests: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
         favorite_bands: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
-        city: Faker::Address.city
+        city: Faker::Address.city,
+        avatar: Faker::Avatar.image
     )
 end
 
+pictures = ['', '', '', '', '', '', '', '', '', '', '', '']
 
-1500.times do
+50.times do
+    image = Faker::LoremFlickr.image
+    pictures << image
+end
+
+
+100.times do
     user = User.all.sample
     Post.create(
         user_id: user.id,
-        content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4)
+        content: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
+        img_url: pictures.sample
     )
 end
 
