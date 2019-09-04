@@ -5,8 +5,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :last_name
       t.string :email
       t.string :password_digest
-      t.string :avatar
-      t.string :background_img
+      t.string :avatar, default: "http://sap-certification.info/img/default-avatar.jpg"
+      t.string :background_img, default: "http://blogs.discovermagazine.com/d-brief/files/2019/02/Ocean-Blue.jpg"
       t.string :bio
       t.string :interests
       t.string :favorite_bands
