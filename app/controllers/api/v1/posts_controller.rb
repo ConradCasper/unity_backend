@@ -15,7 +15,10 @@ class Api::V1::PostsController < ApplicationController
     def create
         @post = Post.create(post_params)
         if @post.valid?
-            render json: { post: @post }, status: :created
+            render json: @post.to_json( :include => {
+                :user => { :only => [:id, :first_name, :last_name, :avatar] },
+                :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
+                :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }})
         else
             render json: { error: 'failed to create post' }, status: :not_acceptable
         end
