@@ -2,8 +2,10 @@ class Api::V1::PostsController < ApplicationController
     
 
     def index
-        @posts = Post.all
-        render json: @posts.to_json( :include => {
+        posts = Post.all
+        followed_user_posts = posts.select { |post| current_user.followees.include?(post.user) || post.user_id === current_user.id  }
+        @sorted_posts = followed_user_posts.sort! { |a, b| b.created_at <=> a.created_at }
+        render json: @sorted_posts.to_json( :include => {
             :user => { :only => [:id, :first_name, :last_name, :avatar] },
             :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
             :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }
@@ -13,7 +15,10 @@ class Api::V1::PostsController < ApplicationController
     def create
         @post = Post.create(post_params)
         if @post.valid?
-            render json: { post: @post }, status: :created
+            render json: @post.to_json( :include => {
+                :user => { :only => [:id, :first_name, :last_name, :avatar] },
+                :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
+                :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }})
         else
             render json: { error: 'failed to create post' }, status: :not_acceptable
         end

@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :email
       t.string :password_digest
       t.string :avatar
-      t.string :background_img
+      t.string :background_img, default: "http://blogs.discovermagazine.com/d-brief/files/2019/02/Ocean-Blue.jpg"
       t.string :bio
       t.string :interests
       t.string :favorite_bands
