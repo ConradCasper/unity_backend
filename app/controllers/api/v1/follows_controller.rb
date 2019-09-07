@@ -11,6 +11,11 @@ class Api::V1::FollowsController < ApplicationController
         end
     end
 
+    def index
+        @follows = Follow.all
+        render json: { follows: @follows }
+    end
+
 
     def destroy
         follow = Follow.find_by(id: params[:id])
