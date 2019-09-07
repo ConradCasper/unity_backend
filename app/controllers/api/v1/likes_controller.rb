@@ -11,6 +11,11 @@ class Api::V1::LikesController < ApplicationController
         end
     end
 
+    def index
+        @likes = Like.all
+        render json: { likes: @likes }
+    end
+
 
     def destroy
         like = Like.find_by(id: params[:id])

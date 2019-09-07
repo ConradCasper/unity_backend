@@ -1,5 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
-    skip_before_action :authorized
+    skip_before_action :authorized, only: [:index]
 
     def create
         @comment = Comment.create(comment_params)
@@ -10,6 +10,11 @@ class Api::V1::CommentsController < ApplicationController
         else
             render json: { error: 'failed to create comment' }, status: :not_acceptable
         end
+    end
+
+    def index
+        @comments = Comment.all
+        render json: { comments: @comments }
     end
 
 
