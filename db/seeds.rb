@@ -51,7 +51,7 @@ User.create(
     )
 end
 
-pictures = ['', '', '', '', '', '', '', '', '', '', '', '']
+pictures = []
 
 50.times do
     image = Faker::LoremFlickr.image

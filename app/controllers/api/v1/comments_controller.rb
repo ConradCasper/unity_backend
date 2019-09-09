@@ -4,17 +4,16 @@ class Api::V1::CommentsController < ApplicationController
     def create
         @comment = Comment.create(comment_params)
         if @comment.valid? 
-            render json: { comment: @comment.to_json( :include => {
-                :user => { :only => [:id, :first_name, :last_name, :avatar] }
-            })}
+            render json: { comment: @comment }
         else
             render json: { error: 'failed to create comment' }, status: :not_acceptable
         end
     end
 
     def index
-        @comments = Comment.all
-        render json: { comments: @comments }
+        comments = Comment.all
+        @sorted_comments = comments.sort { |a, b| b.created_at <=> a.created_at }
+        render json: { comments: @sorted_comments }
     end
 
 
