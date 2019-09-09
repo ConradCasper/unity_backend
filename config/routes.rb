@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :follows, only: [:create, :destroy, :index]
       resources :likes, only: [:create, :destroy, :index]
       resources :comments, only: [:create, :destroy, :index]
-      resources :users, only: [:create, :update, :destroy, :index, :show]
+      resources :users, only: [:create, :edit, :update, :destroy, :index, :show]
       resources :posts, only: [:create, :edit, :update, :destroy, :index]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'

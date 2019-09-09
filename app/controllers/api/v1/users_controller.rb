@@ -11,6 +11,23 @@ class Api::V1::UsersController < ApplicationController
         render json: { users: @users }
     end
 
+    
+
+    def update
+        @user = User.find_by(id: user_params[:id])
+        @user.avatar = user_params[:avatar]
+        @user.first_name = user_params[:first_name]
+        @user.last_name = user_params[:last_name]
+        @user.background_img = user_params[:background_img]
+        @user.interests = user_params[:interests]
+        @user.bio = user_params[:bio]
+        @user.favorite_bands = user_params[:favorite_bands]
+        if @user.save
+            render json: { user: @user }
+        else render json: { error: 'failed to update user' }, status: :not_acceptable
+        end
+    end
+
 
     def create
         @user = User.create(user_params)
@@ -25,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
 
     private
     def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :password)
+        params.require(:user).permit(:id, :first_name, :last_name, :email, :password, :avatar, :background_img, :interests, :bio, :favorite_bands)
     end
 
 
