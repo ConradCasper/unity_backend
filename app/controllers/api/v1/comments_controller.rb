@@ -18,11 +18,10 @@ class Api::V1::CommentsController < ApplicationController
 
 
     def destroy
-        comment = Comment.find_by(id: params[:id])
-        if comment.user_id === current_user.id
-        comment.destroy
-        else
-            render json: { error: "you can't delete someone else's comment just because you don't like it!" }, status: :unauthorized
+        @comment = Comment.find_by(id: params[:id])
+        if @comment.user_id === current_user.id
+        @comment.destroy
+            render json: { comment: @comment }
         end
 
     end
