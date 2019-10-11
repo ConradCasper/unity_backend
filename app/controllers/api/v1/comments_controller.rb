@@ -1,26 +1,27 @@
 class Api::V1::CommentsController < ApplicationController
-    skip_before_action :authorized
+    skip_before_action :authorized, only: [:index]
 
     def create
         @comment = Comment.create(comment_params)
         if @comment.valid? 
-            render json: { comment: @comment.to_json( :include => {
-                :user => { :only => [:id, :first_name, :last_name, :avatar] }
-            })}
+            render json: { comment: @comment }
         else
             render json: { error: 'failed to create comment' }, status: :not_acceptable
         end
     end
 
+    def index
+        comments = Comment.all
+        @sorted_comments = comments.sort { |a, b| b.created_at <=> a.created_at }
+        render json: { comments: @sorted_comments }
+    end
+
 
     def destroy
-        comment = Comment.find_by(id: params[:id])
-        if comment.user_id === current_user.id
-        comment.destroy
-        else
-            render json: { error: "you can't delete someone else's comment just because you don't like it!" }, status: :unauthorized
-        end
-
+        @comment = Comment.find_by(id: params[:id])
+        @comment.destroy
+        render json: { comment: @comment }
+        
     end
 
 

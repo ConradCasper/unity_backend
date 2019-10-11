@@ -1,5 +1,5 @@
 class Api::V1::LikesController < ApplicationController
-    skip_before_action :authorized
+    skip_before_action :authorized, only: [:index]
 
 
     def create
@@ -11,10 +11,16 @@ class Api::V1::LikesController < ApplicationController
         end
     end
 
+    def index
+        @likes = Like.all
+        render json: { likes: @likes }
+    end
+
 
     def destroy
-        like = Like.find_by(id: params[:id])
-        like.destroy
+        @like = Like.find(params[:id])
+        @like.destroy
+        render json: { like: @like }
     end
 
 

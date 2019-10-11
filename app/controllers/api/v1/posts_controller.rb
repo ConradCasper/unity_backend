@@ -1,24 +1,16 @@
 class Api::V1::PostsController < ApplicationController
-    
+    skip_before_action :authorized, only: [:index]
 
     def index
         posts = Post.all
-        followed_user_posts = posts.select { |post| current_user.followees.include?(post.user) || post.user_id === current_user.id  }
-        @sorted_posts = followed_user_posts.sort! { |a, b| b.created_at <=> a.created_at }
-        render json: @sorted_posts.to_json( :include => {
-            :user => { :only => [:id, :first_name, :last_name, :avatar] },
-            :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
-            :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }
-        } )
+        @sorted_posts = posts.sort { |a, b| b.created_at <=> a.created_at }
+        render json: { posts: @sorted_posts }
     end
 
     def create
         @post = Post.create(post_params)
         if @post.valid?
-            render json: @post.to_json( :include => {
-                :user => { :only => [:id, :first_name, :last_name, :avatar] },
-                :comments => { :include => { :user => { :only => [:id, :first_name, :last_name, :avatar] } }},
-                :likes => { :include => { :user => { :only => [:id, :first_name, :last_name] } } }})
+            render json: { post: @post }
         else
             render json: { error: 'failed to create post' }, status: :not_acceptable
         end
@@ -27,7 +19,7 @@ class Api::V1::PostsController < ApplicationController
 
     def edit
         @post = Post.find_by(id: params[:id])
-        render json: @post
+        render json: { post: @post }
     end
 
 

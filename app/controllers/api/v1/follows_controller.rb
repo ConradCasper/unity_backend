@@ -1,5 +1,5 @@
 class Api::V1::FollowsController < ApplicationController
-    skip_before_action :authorized
+    skip_before_action :authorized, only: [:index]
 
 
     def create
@@ -9,6 +9,11 @@ class Api::V1::FollowsController < ApplicationController
         else
             render json: { error: "there was a problem trying to follow this user, please try again later" }, status: :not_acceptable
         end
+    end
+
+    def index
+        @follows = Follow.all
+        render json: { follows: @follows }
     end
 
 

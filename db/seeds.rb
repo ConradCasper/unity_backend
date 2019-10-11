@@ -51,15 +51,15 @@ User.create(
     )
 end
 
-pictures = ['', '', '', '', '', '', '', '', '', '', '', '']
+pictures = []
 
-50.times do
+1000.times do
     image = Faker::LoremFlickr.image
     pictures << image
 end
 
 
-100.times do
+1000.times do
     user = User.all.sample
     Post.create(
         user_id: user.id,
@@ -68,7 +68,7 @@ end
     )
 end
 
-1000.times do
+1750.times do
     user = User.all.sample
     post = Post.all.sample
     Comment.create(
@@ -89,7 +89,7 @@ end
 end
 
 
-400.times do
+600.times do
     follower = User.all.sample
     followee = User.all.sample
     Follow.create(
