@@ -16,6 +16,13 @@
 # favorite_bands
 # city
 
+backgrounds = ["https://images.unsplash.com/photo-1578491133524-f33d9c7a7484?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3423&q=80",
+                "https://images.unsplash.com/photo-1587657565520-6c0c23cf68c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
+                "https://images.unsplash.com/photo-1587588354456-ae376af71a25?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
+                "https://images.unsplash.com/photo-1586191582109-7e0c712e9460?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2249&q=80",
+                "https://images.unsplash.com/photo-1587321819113-cc19ebc6e5e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80"
+]
+
 
 Post.destroy_all
 Like.destroy_all
@@ -28,8 +35,8 @@ User.create(
     last_name: "Casper",
     email: "conradcasper@icloud.com",
     password: "password",
-    avatar: "https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-9/50878341_106590607123992_507388018802294784_n.jpg?_nc_cat=110&_nc_oc=AQkuHS6oxf0rn4IKzytg3PfxTEFIozx_nswTXJNuJOExA1nDkhOi6z5-qD1lkdzYdEI&_nc_ht=scontent-atl3-1.xx&oh=bb857ed07355282ea57d74535f1f36a3&oe=5E0CBC8B",
-    background_img: "https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-9/53868237_126469975136055_9159577800980561920_n.jpg?_nc_cat=110&_nc_oc=AQnjInRV4RTiQ56Pq0HS89htd7c71vqxHVlnmXBojJWy8riRG6TbertvIQKFs3tkJ9g&_nc_ht=scontent-atl3-1.xx&oh=d27198c2c32c798b883a9c5a7e036141&oe=5DCD3555",
+    avatar: "https://imgur.com/L9JTgkr",
+    background_img: "https://images.unsplash.com/photo-1506850981415-e1911e907185?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
     bio: "Hello World!",
     interests: "coding, long naps, making music, hiking",
     favorite_bands: "disclosure, fisher, chris lake, the bixel brothers, skrillex, diplo",
@@ -47,7 +54,8 @@ User.create(
         interests: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
         favorite_bands: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
         city: Faker::Address.city,
-        avatar: Faker::Avatar.image
+        avatar: Faker::Avatar.image,
+        background_img: backgrounds.sample
     )
 end
 

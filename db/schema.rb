@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2019_08_28_174340) do
     t.string "last_name"
     t.string "email"
     t.string "password_digest"
-    t.string "avatar", default: "http://sap-certification.info/img/default-avatar.jpg"
+    t.string "avatar"
     t.string "background_img", default: "http://blogs.discovermagazine.com/d-brief/files/2019/02/Ocean-Blue.jpg"
     t.string "bio"
     t.string "interests"
